@@ -19,7 +19,7 @@
   "main": "app.ts",
   "license": "Apache-2.0",
   "dependencies": {
-    "@kuzzleio/iot-platform": "^1.1.13",
+    "@kuzzleio/iot-platform": "^1",
     "kuzzle": "^2"
   },
   "devDependencies": {
@@ -41,10 +41,6 @@
     "typescript": "^4.2.4"
   },
   "files": [
-    "index.js",
-    "index.d.ts",
-    "lib/**/*.js",
-    "lib/**/*.d.ts",
-    "lib/**/*.json"
+    "dist/**/"
   ]
 }
