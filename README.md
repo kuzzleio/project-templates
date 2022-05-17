@@ -19,6 +19,7 @@ Every scaffold comes with all necessary tools to develop a Kuzzle project:
 ### Available template flavors
 
  - [generic](./generic/): a standard Kuzzle project
+ - [iot-platform](./iot-platform/): a project using Kuzzle IoT Platform
 
 ## Add a new flavor
 

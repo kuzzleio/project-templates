@@ -19,6 +19,7 @@
   "main": "app.ts",
   "license": "Apache-2.0",
   "dependencies": {
+    "@kuzzleio/iot-platform": "^1.1.13",
     "kuzzle": "^2"
   },
   "devDependencies": {
