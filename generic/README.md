@@ -30,7 +30,7 @@ Finally, start your application with `npm run dev`
 
 It's important to install NPM packages from inside the container to avoid Node.js mismatch errors.
 
-Those errors appear when
+Those errors may appear when
  - the Node.js version installed on your computer is not the same as the one used in our Docker containers
  - your computer use a different version of the GLIBC
  - your computer use a different CPU architecture (e.g. MacOS use Darwin)
