@@ -28,6 +28,6 @@ ENV NODE_ENV=production
 
 WORKDIR /var/app
 
-COPY --from=builder /var/app/ .
+COPY --from=builder /var/app/dist .
 
 CMD [ "node", "app.js" ]
