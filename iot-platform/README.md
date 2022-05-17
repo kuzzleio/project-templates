@@ -10,26 +10,15 @@ Requirement:
 
 First, install [Kourou](https://github.com/kuzzleio/kourou), the Kuzzle CLI: `npm install -g kourou`
 
-<<<<<<< HEAD:generic/README.md
-### Docker
-
-=======
 
 ### Docker
 
->>>>>>> iot-platform:iot-platform/README.md
 First, you need then to install dependencies: `npm run docker npm install`
 
 Then, start your application with `npm run docker:dev`
 
 ### Standalone
 
-<<<<<<< HEAD:generic/README.md
-First, you need to start Kuzzle additional service: `npm run services`
-
-Then, you need then to install dependencies: `npm install`
-
-=======
 First, you need to login to our private package repository:
 
 ```
@@ -43,7 +32,6 @@ Then, you need then to install dependencies: `npm install`
 
 You also need to start Kuzzle additional service: `npm run services`
 
->>>>>>> iot-platform:iot-platform/README.md
 Finally, start your application with `npm run dev`
 
 ## Manipulating NPM through Docker
