@@ -9,4 +9,4 @@ do
 done;
 
 npm config set @kuzzleio:registry https://npm.pkg.github.com
-npm set //npm.pkg.github.com/:_authToken $NPM_TOKEN
+npm set //npm.pkg.github.com/:_authToken $auth_token

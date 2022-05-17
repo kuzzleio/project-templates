@@ -10,23 +10,17 @@ Requirement:
 
 First, install [Kourou](https://github.com/kuzzleio/kourou), the Kuzzle CLI: `npm install -g kourou`
 
-
 ### Docker
 
-First, you need then to install dependencies: `npm run docker npm install`
+First, you need to login to our private package repository: `npm run docker bash scripts/kuzzle-login.sh <licence-key>`
 
-Then, start your application with `npm run docker:dev`
+Then, you need then to install dependencies: `npm run docker npm install`
+
+Finally, start your application with `npm run docker:dev`
 
 ### Standalone
 
-First, you need to login to our private package repository:
-
-```
-npm login --scope=@kuzzleio --registry=https://packages.app.kuzzle.io
-# Username: <username>
-# Password: <licence-key>
-# Email: (this IS public): <email>
-```
+First, you need to login to our private package repository: `bash scripts/kuzzle-login.sh <licence-key>`
 
 Then, you need then to install dependencies: `npm install`
 
