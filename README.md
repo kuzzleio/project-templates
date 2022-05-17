@@ -19,3 +19,11 @@ Every scaffold comes with all necessary tools to develop a Kuzzle project:
 ### Available template flavors
 
  - [generic](./generic/): a standard Kuzzle project
+
+## Add a new flavor
+
+You should start from the `clean` branch which does not contains the file associated with other flavors.
+
+Then, create a new branch with the same name as your flavor.
+
+When you are done, commit and push your branch. Then modify the root README to reference your flavor.
