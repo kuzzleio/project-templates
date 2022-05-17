@@ -7,11 +7,5 @@ node_modules/
 *#
 *~
 
-# Typescript related files
-app.js
-app.d.ts
-app.js.map
-
-lib/**/*.d.ts
-lib/**/*.js.map
-lib/**/*.js
+# Build files
+dist/**/*

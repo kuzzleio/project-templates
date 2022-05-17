@@ -40,10 +40,6 @@
     "typescript": "^4.2.4"
   },
   "files": [
-    "index.js",
-    "index.d.ts",
-    "lib/**/*.js",
-    "lib/**/*.d.ts",
-    "lib/**/*.json"
+    "dist/**/*"
   ]
 }
