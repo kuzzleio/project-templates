@@ -1,4 +1,4 @@
-# Kuzzle Project Scaffold
+# Kuzzle Project Templates
 
 This repository contains references for scaffolding new Kuzzle projects.
 
