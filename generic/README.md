@@ -12,9 +12,19 @@ Requirement:
 
 First, install [Kourou](https://github.com/kuzzleio/kourou), the Kuzzle CLI: `npm install -g kourou`
 
-Then you need to start the services used by Kuzzle, Elasticsearch and Redis. You can run those services in the background with the following command: `npm run services`
+### Docker
 
-Finally you can start your application with `npm run docker:dev`.
+First, you need then to install dependencies: `npm run docker npm install`
+
+Then, start your application with `npm run docker:dev`
+
+### Standalone
+
+First, you need to start Kuzzle additional service: `npm run services`
+
+Then, you need then to install dependencies: `npm install`
+
+Finally, start your application with `npm run dev`
 
 ## Manipulating NPM through Docker
 
