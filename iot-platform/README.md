@@ -43,6 +43,32 @@ To prevent those errors, you can use the following commands
  - `npm run docker npm rebuild` run a standard `npm rebuild`
  - etc.
 
+## Building production image
+
+You can build a production image with the provided Dockerfile.
+
+This Dockerfile take 2 build arguments:
+ - `NPM_TOKEN`: your access token for private package repository
+ - `KUZZLE_VAULT_KEY`: optionnal [Vault Key]()
+
+```bash
+docker build --build-arg NPM_TOKEN=<auth-token> -t <image-name> .
+```
+
+### Build PaaS compatible image
+
+To be compatible with the PaaS and allowed to be deployed, the image must follow this convention:
+
+Format: `harbor.paas.kuzzle.io/<project-name>/<name>:<version>`
+
+Example: `harbor.paas.kuzzle.io/kuzzle-iot-monitor/platform:1.4.2`
+
+Complete build example:
+
+```
+docker build --build-arg NPM_TOKEN=<auth-token> -t harbor.paas.kuzzle.io/kuzzle-iot-monitor/platform:1.4.2 .
+```
+
 ## Troubleshooting
 
 ### NODE_MODULE_VERSION mismatch

@@ -7,8 +7,10 @@ ENV KUZZLE_VAULT_KEY=$KUZZLE_VAULT_KEY
 ARG NPM_TOKEN
 ENV NPM_TOKEN=$NPM_TOKEN
 
-RUN npm config set @kuzzleio:registry https://npm.pkg.github.com
-RUN npm set //npm.pkg.github.com/:_authToken $NPM_TOKEN
+RUN echo $NPM_TOKEN
+
+RUN npm config set @kuzzleio:registry https://packages.paas.kuzzle.io
+RUN npm set //packages.paas.kuzzle.io/:_authToken $NPM_TOKEN
 
 ADD . /var/app
 
