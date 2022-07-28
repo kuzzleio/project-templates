@@ -1,5 +1,5 @@
 import { Backend } from 'kuzzle';
-import { registerKIoTP } from '@kuzzleio/iot-platform';
+import { registerKIoTP } from '@kuzzleio/iot-backend';
 
 export type MyIoTApplicationConfig = {
   someValue: string;
