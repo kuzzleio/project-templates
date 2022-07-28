@@ -15,10 +15,6 @@ import {
   createBackendStoreModule,
   KStoreModuleTypes,
 } from "@kuzzleio/kuzzle-application-builder";
-import {
-  createDashboardsStoreModule,
-  MODULE_NAME as DASHBOARDS,
-} from "@kuzzleio/dashboard-builder";
 
 Vue.use(Vuex);
 
@@ -42,7 +38,6 @@ export default new Vuex.Store<RootState>({
     ),
     [StoreNamespaceTypes.MEASURES]:
       createMeasuresStoreModule<RootState>(kuzzle),
-    [StoreNamespaceTypes.ALERTS]: alertsStoreFactory<RootState>(kuzzle),
-    [DASHBOARDS]: createDashboardsStoreModule(kuzzle),
+    [StoreNamespaceTypes.ALERTS]: alertsStoreFactory<RootState>(kuzzle)
   },
 });

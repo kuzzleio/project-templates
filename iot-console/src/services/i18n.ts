@@ -4,15 +4,15 @@ import { mergeLocaleMessages } from '@kuzzleio/kuzzle-application-builder'
 
 import defaultsDeep from 'lodash/defaultsDeep'
 
-// Install the VueI18n plugin
-Vue.use(VueI18n)
-
 // The locales of the app
 import en from '../locales/en.json'
 import fr from '../locales/fr.json'
 
 // The locales of the IoT Console
 import { locales as KIoTPLocales } from '@kuzzleio/iot-console'
+
+// Install the VueI18n plugin
+Vue.use(VueI18n)
 
 // Merge all the locale messages
 const localeMessages = {

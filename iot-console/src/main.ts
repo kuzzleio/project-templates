@@ -1,4 +1,5 @@
 import Vue from "vue";
+import i18n from './services/i18n'
 import App from "./App.vue";
 import { createRouter } from "./router";
 import store from "./store";
@@ -20,8 +21,6 @@ import {
   formatSvg,
   KIoTCViews,
 } from "@kuzzleio/iot-console";
-
-import './services/i18n'
 
 // BOOTSTRAP DIRECTIVEs
 Vue.directive("b-modal", VBModal);
@@ -48,5 +47,6 @@ const router = createRouter(store, KIoTCViews);
 new Vue({
   router,
   store,
+  i18n,
   render: (h) => h(App),
 }).$mount("#app");
