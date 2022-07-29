@@ -1,8 +1,27 @@
-# frontend
+# IoT Console
+
+This is the frontend of the IoT Platform.
 
 ## Project setup
 
-`npm i @kuzzleio/kuzzle-application-builder @kuzzleio/iot-console @kuzzleio/dashboard-builder`
+Run `npm install` and the `npm run serve`
+
+You need at least to authenticate with an user, you can create the admin user with:
+```bash
+kourou security:createUser '{
+  content: {
+    profileIds: ["admin"]
+  },
+  credentials: {
+    local: {
+      username: "admin",
+      password: "admin"
+    }
+  }
+}'
+```
+
+Then you can create the first tenant from the interface: Administration > Tenant > Create.
 
 ## Troubleshooting
 
