@@ -2,8 +2,7 @@
 
 ## Project setup
 
-`npm i @kuzzleio/kuzzle-application-builder`
-`npm i @kuzzleio/iot-console @kuzzleio/dashboard-builder`
+`npm i @kuzzleio/kuzzle-application-builder @kuzzleio/iot-console @kuzzleio/dashboard-builder`
 
 ## Troubleshooting
 
