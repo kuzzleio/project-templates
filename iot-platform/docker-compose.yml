@@ -12,6 +12,7 @@ services:
       - net.core.somaxconn=8192
     volumes:
       - .:/var/app
+      - ~/.npmrc:/root/.npmrc
     ports:
       - "7512:7512"
       - "9229:9229"
