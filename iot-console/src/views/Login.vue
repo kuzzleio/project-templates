@@ -83,7 +83,6 @@
 </template>
 
 <script lang="ts">
-// import KLoginForm from '../../../../kuzzle-application-builder/lib/src/modules/loginForm/LoginForm.vue'
 import { KLoginForm } from "@kuzzleio/kuzzle-application-builder";
 import { Component } from "vue-property-decorator";
 import {
