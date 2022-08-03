@@ -1,8 +1,8 @@
 import { Backend } from 'kuzzle';
 import { registerKIoTP } from '@kuzzleio/iot-backend';
 
-import { registerDefaultTenant } from './modules/tenants/default';
-import { registerCommonsRessources } from './modules/commons';
+import { registerTenantDefault } from './application-builder/tenant-default'
+import { registerCommons } from './application-builder/commons';
 
 export type MyIoTApplicationConfig = {
   someValue: string;
@@ -21,8 +21,10 @@ export class MyIoTApplication extends Backend {
     super('my-iot-application');
 
     registerKIoTP(this);
-    registerCommonsRessources(this);
-    registerDefaultTenant(this);
+
+    // Register ressources defined with ApplicationBuilder
+    registerCommons(this);
+    registerTenantDefault(this);
   }
 
   async start () {
