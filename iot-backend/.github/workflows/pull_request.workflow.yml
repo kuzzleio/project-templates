@@ -21,27 +21,30 @@ jobs:
             ${{ runner.os }}-
       - uses: actions/setup-node@v1.4.4
         with:
-          node-version: "12"
+          node-version: "16"
+      - name: Set Github package registry
+        run: npm config set @kuzzleio:registry https://packages.paas.kuzzle.io
+      - name: Github package registry authentication
+        run: npm set //packages.paas.kuzzle.io/:_authToken ${{ secrets.NPM_TOKEN }}
       - uses: ./.github/actions/backend-lint
 
   functional-tests:
-     name: Functional Tests
-     runs-on: ubuntu-18.04
-     needs: [lint]
-     steps:
-       - uses: actions/checkout@v2
-       - name: Cache node modules
-         uses: actions/cache@v2
-         env:
-           cache-name: cache-node-modules
-         with:
-           path: ~/.npm
-           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-           restore-keys: |
-             ${{ runner.os }}-build-${{ env.cache-name }}-
-             ${{ runner.os }}-build-
-             ${{ runner.os }}-
-       - uses: actions/setup-node@v1.4.4
-         with:
-           node-version: "12"
-       - uses: ./.github/actions/backend-functional-test
+    name: Functional Tests
+    runs-on: ubuntu-18.04
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - uses: ./.github/actions/backend-functional-test
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

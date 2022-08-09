@@ -9,3 +9,5 @@ node_modules/
 
 # Typescript related files
 dist/**/*
+
+secrets.json

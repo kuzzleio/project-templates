@@ -13,6 +13,7 @@ services:
     volumes:
       - .:/var/app
       - ~/.npmrc:/root/.npmrc
+      - ./environments/local/kuzzlerc:/etc/kuzzlerc
     ports:
       - "7512:7512"
       - "9229:9229"
@@ -26,7 +27,10 @@ services:
       - kuzzle_services__memoryStorage__node__host=redis
       - NODE_ENV=${NODE_ENV:-development}
       - DEBUG=${DEBUG:-none}
-      # - DEBUG=${DEBUG:-kuzzle:*,-kuzzle:entry-point:protocols:websocket,-kuzzle:cluster:heartbeat}
+      - NPM_TOKEN
+      # Uncomment when using a vault file
+      # - KUZZLE_VAULT_KEY
+      # - KUZZLE_SECRETS_FILE=./environments/local/secrets.enc.json
 
   redis:
     image: redis:5

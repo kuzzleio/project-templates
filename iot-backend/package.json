@@ -24,7 +24,8 @@
     "@kuzzleio/plugin-workflows": "^0.4.4",
     "@kuzzleio/scheduler": "^1.1.5",
     "kuzzle": "^2",
-    "kuzzle-device-manager": "^2.0.0-rc8"
+    "kuzzle-device-manager": "^2.0.0-rc8",
+    "kuzzle-plugin-hermes-messenger": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.37",
@@ -40,5 +41,10 @@
   },
   "files": [
     "dist/**/"
-  ]
+  ],
+  "kuzzle": {
+    "paas": {
+      "project": "geodis-sdl"
+    }
+  }
 }

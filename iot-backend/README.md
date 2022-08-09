@@ -10,23 +10,33 @@ Requirement:
 
 First, install [Kourou](https://github.com/kuzzleio/kourou), the Kuzzle CLI: `npm install -g kourou`
 
-### Docker
+### First setup of your PaaS environment
 
-First, you need to login to our private package repository: `npm run docker bash scripts/kuzzle-login.sh <licence-key>`
+You need to initialize your PaaS project information for this repository:
 
-Then, you need then to install dependencies: `npm run docker npm install`
+```bash
+kourou paas:init <paas-project-name>
+```
 
-Finally, start your application with `npm run docker:dev`
+Then, you can login to the PaaS. This will also activate your license to download private packages.
 
-### Standalone
+Execute this command and follow the instructions:
 
-First, you need to login to our private package repository: `bash scripts/kuzzle-login.sh <licence-key>`
+```bash
+kourou paas:login
+```
 
-Then, you need then to install dependencies: `npm install`
+_Under the hood, this command will create a `.npmrc` file to save your authentication to our private registry._
 
-You also need to start Kuzzle additional service: `npm run services`
+### Install dependencies
 
-Finally, start your application with `npm run dev`
+You can now install the dependencies with the following command:
+
+```bash
+npm run docker npm install
+```
+
+_You should always manipulate NPM from inside the container to avoid futur problems_
 
 ## Manipulating NPM through Docker
 
@@ -79,7 +89,7 @@ Try to rebuild dependencies from inside your Docker container with: `npm run doc
 
 **Symptoms:**
 ```
-kiotp_node_2     | > kuzzle-iot-platform@1.0.0 dev /var/app
+kiotp_node_2     | > kuzzle-iot-backend@1.0.0 dev /var/app
 kiotp_node_2     | > NODE_ENV=development ergol start.ts -c ergol.config.json
 kiotp_node_2     |
 kiotp_node_2     | Debugger listening on ws://0.0.0.0:9229/58d23bb2-d8fb-4fc0-b328-df52eaa27273
@@ -90,3 +100,6 @@ kiotp_node_2     | NODE_MODULE_VERSION 93. This version of Node.js requires
 kiotp_node_2     | NODE_MODULE_VERSION 83. Please try re-compiling or re-installing
 kiotp_node_2     | the module (for instance, using `npm rebuild` or `npm install`).
 ```
+
+### Error: Integrity checksum failed when using sha512: wanted sha512-BBB..== but got sha512-AAA..==
+
