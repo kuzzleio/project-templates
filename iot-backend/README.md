@@ -65,6 +65,18 @@ This Dockerfile take 2 build arguments:
 docker build --build-arg NPM_TOKEN=<auth-token> -t <image-name> .
 ```
 
+## Adding the Vault to the project
+
+First, read the [official guide](https://docs.kuzzle.io/core/2/guides/advanced/secrets-vault/) to understand the secret vault.
+
+You will need to generate a vault key for each environment.
+
+It's recommended to follow this format: `kv_<project>_<environment>_<random-password>`
+
+Then you will need to encrypt the secrets files located in `environments/<environment>/secrets.json` by using the corresponding vault keys.
+
+Finally, look for every occurence of the following comment `Uncomment when using a vault file` and uncomment the related lines.
+
 ### Build PaaS compatible image
 
 To be compatible with the PaaS and allowed to be deployed, the image must follow this convention:

@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-
       - uses: actions/setup-node@v1.4.4
         with:
-          node-version: "14"
+          node-version: "16"
       - name: Set Github package registry
         run: npm config set @kuzzleio:registry https://packages.paas.kuzzle.io
       - name: Github package registry authentication
@@ -101,7 +101,7 @@ jobs:
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: actions/setup-node@v1.4.4
         with:
-          node-version: "14"
+          node-version: "16"
       - name: Deploy paas
         run: |
           cd backend
