@@ -6,6 +6,6 @@ runs:
     - name: run backend lint
       shell: bash
       run: |
-           cd backend
-           npm ci
-           npm run test:lint
+        cd backend
+        npm i
+        npm run test:lint

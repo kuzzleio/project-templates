@@ -1,10 +1,12 @@
-import { ApplicationBuilder } from '@kuzzleio/iot-backend';
+import { ApplicationBuilder, DeviceManagerPlugin } from '@kuzzleio/iot-backend';
 
 import { MyIoTApplication } from '../MyIoTApplication';
-import { DefaultDecoder } from '../modules/decoders';
+import { ExampleDecoder } from '../modules/decoders';
 
 export function registerCommons(app: MyIoTApplication) {
+  const deviceManager = app.plugin.get('device-manager') as DeviceManagerPlugin;
+
   ApplicationBuilder.commons(commons => {
-    commons.decoder.register(new DefaultDecoder());
+    commons.decoder.register(new ExampleDecoder(deviceManager.measures));
   });
 }

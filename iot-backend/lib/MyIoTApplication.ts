@@ -1,24 +1,20 @@
-import { Backend } from 'kuzzle';
-import { registerKIoTP } from '@kuzzleio/iot-backend';
+import { Backend } from "kuzzle";
+import { registerKIoTP } from "@kuzzleio/iot-backend";
 
-import { registerTenantDefault } from './application-builder/tenant-default'
-import { registerCommons } from './application-builder/commons';
+import { registerTenantDefault } from "./application-builder/tenant-default";
+import { registerCommons } from "./application-builder/commons";
 
 export type MyIoTApplicationConfig = {
   someValue: string;
-
-  another: {
-    value: number;
-  }
 };
 
 export class MyIoTApplication extends Backend {
-  get appConfig () {
+  get appConfig() {
     return this.config.content.application as MyIoTApplicationConfig;
   }
 
-  constructor () {
-    super('my-iot-application');
+  constructor() {
+    super("my-iot-application");
 
     registerKIoTP(this);
 
@@ -27,9 +23,9 @@ export class MyIoTApplication extends Backend {
     registerTenantDefault(this);
   }
 
-  async start () {
+  async start() {
     await super.start();
 
-    this.log.info('Application started');
+    this.log.info("Application started");
   }
 }
