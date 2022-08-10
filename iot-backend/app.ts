@@ -1,5 +1,5 @@
-import { MyIoTApplication } from './lib/MyIoTApplication';
+import { ExampleApplication } from './lib/ExampleApplication';
 
-const app = new MyIoTApplication();
+const app = new ExampleApplication();
 
 app.start();

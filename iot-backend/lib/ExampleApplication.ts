@@ -1,16 +1,16 @@
 import { Backend } from "kuzzle";
 import { registerKIoTP } from "@kuzzleio/iot-backend";
 
-import { registerTenantDefault } from "./application-builder/tenant-default";
+import { registerTenantExamplePublicLightning } from "./application-builder/tenant-example-public-lightning";
 import { registerCommons } from "./application-builder/commons";
 
-export type MyIoTApplicationConfig = {
+export type ExampleApplicationConfig = {
   someValue: string;
 };
 
-export class MyIoTApplication extends Backend {
+export class ExampleApplication extends Backend {
   get appConfig() {
-    return this.config.content.application as MyIoTApplicationConfig;
+    return this.config.content.application as ExampleApplicationConfig;
   }
 
   constructor() {
@@ -20,7 +20,7 @@ export class MyIoTApplication extends Backend {
 
     // Register ressources defined with ApplicationBuilder
     registerCommons(this);
-    registerTenantDefault(this);
+    registerTenantExamplePublicLightning(this);
   }
 
   async start() {
