@@ -1,4 +1,4 @@
-# Kuzzle IoT Platform
+# Kuzzle IoT Backend
 
 ## Installation and run
 
@@ -10,7 +10,7 @@ Requirement:
 
 First, install [Kourou](https://github.com/kuzzleio/kourou), the Kuzzle CLI: `npm install -g kourou`
 
-### First setup of your PaaS environment
+### First setup of your local PaaS environment
 
 You need to initialize your PaaS project information for this repository:
 
@@ -37,6 +37,35 @@ npm run docker npm install
 ```
 
 _You should always manipulate NPM from inside the container to avoid futur problems_
+
+### Initialize local data
+
+Once you are done, you can run the project by using `npm run docker:dev`.
+
+Then, you will need to create the first administrator:
+
+```bash
+kourou security:createUser '{
+  content: {
+    profileIds: ["admin"]
+  },
+  credentials: {
+    local: {
+      username: "admin",
+      password: "admin"
+    }
+  }
+}'
+```
+
+Finally, you need to create the first tenant. If it's not already done, rename accordingly the example tenant group `example_public_lightning` in the `./application-builder/tenant-example-public-lightning` file.
+
+You can now create the first tenant:
+
+```bash
+# replace "example_public_lightning" with the name of your tenant group
+kourou multi-tenancy/tenant:create -a name=kuzzle -a group=example_public_lightning
+```
 
 ## Manipulating NPM through Docker
 
