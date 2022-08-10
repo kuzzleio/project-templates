@@ -40,10 +40,5 @@
   },
   "files": [
     "dist/**/"
-  ],
-  "kuzzle": {
-    "paas": {
-      "project": "geodis-sdl"
-    }
-  }
+  ]
 }
