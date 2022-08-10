@@ -20,7 +20,7 @@
   "dependencies": {
     "@kuzzleio/dashboard-builder": "^0.5.7",
     "@kuzzleio/iot-backend": "^2",
-    "@kuzzleio/plugin-multi-tenancy": "^1.1.1",
+    "@kuzzleio/plugin-multi-tenancy": "^1.1.2",
     "@kuzzleio/plugin-workflows": "^0.4.4",
     "@kuzzleio/scheduler": "^1.1.5",
     "kuzzle": "^2",
