@@ -36,7 +36,8 @@ jobs:
           password: ${{ secrets.KUZZLE_PAAS_PASSWORD }}
           npmrc_output_dir: .
           login_only: true
-      - run: |
+      - name: Lint
+        run: |
           npm i
           npm run test:lint
 
@@ -66,7 +67,8 @@ jobs:
           username: ${{ secrets.KUZZLE_PAAS_USERNAME }}
           password: ${{ secrets.KUZZLE_PAAS_PASSWORD }}
           login_only: true
-      - run: |
+      - name: Functional tests
+        run: |
           npm i
           docker-compose -f ./features/docker-compose.yml up -d
           bash features/wait-kuzzle.sh
