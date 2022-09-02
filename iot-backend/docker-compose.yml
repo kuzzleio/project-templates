@@ -27,7 +27,6 @@ services:
       - kuzzle_services__memoryStorage__node__host=redis
       - NODE_ENV=${NODE_ENV:-development}
       - DEBUG=${DEBUG:-none}
-      - NPM_TOKEN
       # Uncomment when using a vault file
       # - KUZZLE_VAULT_KEY
       # - KUZZLE_SECRETS_FILE=./environments/local/secrets.enc.json
