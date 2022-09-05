@@ -24,7 +24,7 @@ ENV NODE_ENV=production
 
 WORKDIR /var/app
 
-COPY --from=builder /var/app/environments/${KUZZLE_ENV}/kuzzlerc /var/app/.kuzzlerc
 COPY --from=builder /var/app/ .
+COPY --from=builder /var/app/environments/${KUZZLE_ENV}/kuzzlerc /var/app/.kuzzlerc
 
 CMD [ "node", "app.js" ]
