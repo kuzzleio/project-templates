@@ -1,0 +1,77 @@
+name: Pull request checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - "[0-9]+-dev"
+env:
+  NODE_VERSION: "16"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Login PaaS
+        uses: kuzzleio/paas-action@v0.5.7
+        with:
+          username: ${{ secrets.KUZZLE_PAAS_USERNAME }}
+          password: ${{ secrets.KUZZLE_PAAS_PASSWORD }}
+          npmrc_output_dir: .
+          login_only: true
+      - name: Lint
+        run: |
+          npm i
+          npm run test:lint
+
+  functional_tests:
+    name: Functional Tests
+    runs-on: ubuntu-20.04
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Login PaaS
+        uses: kuzzleio/paas-action@v0.5.7
+        with:
+          username: ${{ secrets.KUZZLE_PAAS_USERNAME }}
+          password: ${{ secrets.KUZZLE_PAAS_PASSWORD }}
+          login_only: true
+      - name: Functional tests
+        run: |
+          npm i
+          docker-compose -f ./features/docker-compose.yml up -d
+          bash features/wait-kuzzle.sh
+          npm run test:functional
+        env:
+          KUZZLE_VAULT_KEY: ${{ secrets.KUZZLE_VAULT_KEY }}
