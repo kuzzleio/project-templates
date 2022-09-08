@@ -1,0 +1,23 @@
+name: Release scaffolds
+
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create the release files
+        run: find * -maxdepth 0 -type d -exec tar -czf "{}".tar.gz "{}" \;
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "*.tar.gz"
+          # note you'll typically need to create a personal access token
+          # with permissions to create releases in the other repo
+          token: ${{ secrets.GITHUB_TOKEN }}
