@@ -1,0 +1,73 @@
+name: Deploy Main Environment
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  KUZZLE_PAAS_REGISTRY: harbor.paas.kuzzle.io
+  KUZZLE_PAAS_PROJECT: TO_UPDATE
+  KUZZLE_PAAS_ENVIRONMENT: main
+  KUZZLE_PAAS_APPLICATION: api
+
+jobs:
+  build_and_push:
+    name: Backend artefact
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Get current commit short SHA
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+          echo "::set-output name=ref::$(echo $GITHUB_REF | cut -d / -f 3)"
+      - name: Login to registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.KUZZLE_PAAS_REGISTRY }}
+          username: ${{ secrets.KUZZLE_PAAS_USERNAME }}
+          password: ${{ secrets.KUZZLE_PAAS_PASSWORD }}
+      - name: Login to PaaS NPM registry
+        uses: kuzzleio/paas-action@v0.5.7
+        with:
+          username: ${{ secrets.KUZZLE_PAAS_USERNAME }}
+          password: ${{ secrets.KUZZLE_PAAS_PASSWORD }}
+          npmrc_output_dir: .
+          login_only: true
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          file: ./Dockerfile
+          context: .
+          push: true
+          build-args: |
+            KUZZLE_ENV=${{ env.KUZZLE_PAAS_ENVIRONMENT }}
+            KUZZLE_VAULT_KEY=${{ secrets.KUZZLE_VAULT_KEY }}
+          tags: ${{ env.KUZZLE_PAAS_REGISTRY }}/${{ env.KUZZLE_PAAS_PROJECT }}/${{ steps.vars.outputs.ref }}/${{ env.KUZZLE_PAAS_APPLICATION }}:${{ steps.vars.outputs.sha_short }}
+
+  deploy:
+    name: Deploy backend artefact
+    runs-on: ubuntu-22.04
+    needs: [build_and_push]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get current commit short SHA
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+          echo "::set-output name=ref::$(echo $GITHUB_REF | cut -d / -f 3)"
+      - name: Deploy to PaaS
+        uses: kuzzleio/paas-action@v0.5.7
+        with:
+          username: ${{ secrets.KUZZLE_PAAS_USERNAME }}
+          password: ${{ secrets.KUZZLE_PAAS_PASSWORD }}
+          project: ${{ env.KUZZLE_PAAS_PROJECT }}
+          environment: ${{ env.KUZZLE_PAAS_ENVIRONMENT }}
+          application: ${{ env.KUZZLE_PAAS_APPLICATION }}
+          image: ${{ env.KUZZLE_PAAS_REGISTRY }}/${{ env.KUZZLE_PAAS_PROJECT }}/${{ env.KUZZLE_PAAS_ENVIRONMENT }}/${{ env.KUZZLE_PAAS_APPLICATION }}:${{ steps.vars.outputs.sha_short }}
