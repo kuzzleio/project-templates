@@ -4,16 +4,18 @@
   "description": "",
   "author": "",
   "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "clean": "touch app.ts && npm run build | grep TSFILE | cut -d' ' -f 2 | xargs rm",
+    "dev": "NODE_ENV=development npx ergol app.ts -c ergol.config.json",
     "docker": "docker-compose run kuzzle",
     "docker:dev": "docker-compose up",
+    "docker:install": "npm run npm:docker install kuzzle",
+    "docker:npm": "docker-compose run kuzzle npm",
     "services": "npx kourou app:start-services",
-    "dev": "NODE_ENV=development npx ergol app.ts -c ergol.config.json",
     "test": "npm run test:lint && npm run test:functional",
     "test:functional": "cucumber-js --exit --fail-fast",
     "test:lint": "eslint ./src --ext .ts --config .eslintrc.json",
-    "test:lint:fix": "eslint ./src --ext .ts --config .eslintrc.json --fix",
-    "build": "tsc --build tsconfig.json",
-    "clean": "touch app.ts && npm run build | grep TSFILE | cut -d' ' -f 2 | xargs rm"
+    "test:lint:fix": "eslint ./src --ext .ts --config .eslintrc.json --fix"
   },
   "main": "app.ts",
   "license": "Apache-2.0",
