@@ -11,6 +11,7 @@
     "docker:dev": "docker-compose up",
     "docker:install": "npm run npm:docker install kuzzle",
     "docker:npm": "docker-compose run kuzzle npm",
+    "docker:reinstall": "sudo rm -rf node_modules && npm run npm:docker install kuzzle",
     "services": "npx kourou app:start-services",
     "test": "npm run test:lint && npm run test:unit && npm run test:functional",
     "test:functional": "cucumber-js --exit --fail-fast",
