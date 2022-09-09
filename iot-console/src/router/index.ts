@@ -11,6 +11,9 @@ import {
   KPageNotFound,
 } from "@kuzzleio/kuzzle-application-builder";
 import { Store } from "vuex";
+import {
+  chunk as dashboardBuilderChunk,
+} from '../views/dashboards/appChunks'
 
 import { kuzzle } from "../services/kuzzle";
 import Login from "../views/Login.vue";
@@ -19,6 +22,9 @@ export const createRouter = (
   store: Store<RootState>,
   appDefinition: AppChunk[] = []
 ): VueRouter => {
+
+  appDefinition.push(dashboardBuilderChunk);
+
   const appRoutes = generateRoutes(appDefinition);
   const sidebarItems = generateMenuItems(appDefinition);
 
@@ -37,7 +43,7 @@ export const createRouter = (
         component: AppLayout,
         props: { navbarItems: [], sidebarItems },
         children: appRoutes,
-        redirect: { name: "login" },
+        redirect:  '/assets',
       },
       {
         path: "*",
