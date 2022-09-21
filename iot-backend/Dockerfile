@@ -22,7 +22,10 @@ ARG KUZZLE_VAULT_KEY=""
 
 ENV NODE_ENV=production
 
-COPY --from=builder /var/app /var/app
+COPY --from=builder /var/app/dist /var/app
+COPY --from=builder /var/app/node_modules /var/app/node_modules
+COPY --from=builder /var/app/package.json /var/app/package.json
+COPY --from=builder /var/app/package-lock.json /var/app/package-lock.json
 COPY --from=builder /var/app/environments/${KUZZLE_ENV}/kuzzlerc /var/app/.kuzzlerc
 
 WORKDIR /var/app
