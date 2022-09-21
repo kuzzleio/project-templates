@@ -22,9 +22,9 @@ ARG KUZZLE_VAULT_KEY=""
 
 ENV NODE_ENV=production
 
-WORKDIR /var/app
-
-COPY --from=builder /var/app/ .
+COPY --from=builder /var/app /var/app
 COPY --from=builder /var/app/environments/${KUZZLE_ENV}/kuzzlerc /var/app/.kuzzlerc
+
+WORKDIR /var/app
 
 CMD [ "node", "app.js" ]
