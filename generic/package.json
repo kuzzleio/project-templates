@@ -12,6 +12,7 @@
     "docker:npm": "docker-compose run kuzzle npm",
     "docker:npm:install": "npm run docker:npm install",
     "docker:npm:reinstall": "sudo rm -rf node_modules && npm run docker:npm:install",
+
     "services": "npx kourou app:start-services",
     "test": "npm run test:lint && npm run test:functional",
     "test:functional": "cucumber-js --exit --fail-fast",
