@@ -1,25 +1,25 @@
-import { Backend } from 'kuzzle';
+import { Backend } from "kuzzle";
 
 export type MyApplicationConfig = {
   someValue: string;
 
   another: {
     value: number;
-  }
+  };
 };
 
 export class MyApplication extends Backend {
-  get appConfig () {
+  get appConfig() {
     return this.config.content.application as MyApplicationConfig;
   }
 
-  constructor () {
-    super('my-application');
+  constructor() {
+    super("my-application");
   }
 
-  async start () {
+  async start() {
     await super.start();
 
-    this.log.info('Application started');
+    this.log.info("Application started");
   }
 }

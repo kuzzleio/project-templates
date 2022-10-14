@@ -1,12 +1,17 @@
 import { JSONObject, KuzzleRequest } from "kuzzle";
-import { DecodedPayload, Decoder, MeasuresRegister, TemperatureMeasurement } from "@kuzzleio/iot-backend";
+import {
+  DecodedPayload,
+  Decoder,
+  MeasuresRegister,
+  TemperatureMeasurement,
+} from "@kuzzleio/iot-backend";
 
 export class ExampleDecoder extends Decoder {
   constructor(measuresRegister: MeasuresRegister) {
     super("Example", { temperature: "temperature" }, measuresRegister);
 
     this.payloadsMappings = {
-      reference: { type: 'keyword' },
+      reference: { type: "keyword" },
     };
   }
 
@@ -18,16 +23,14 @@ export class ExampleDecoder extends Decoder {
 
     const temperature: TemperatureMeasurement = {
       measuredAt: Date.now(),
-      type: 'temperature',
+      type: "temperature",
       values: {
         temperature: payload.temperature,
       },
     };
 
     const decodedPayload: DecodedPayload = {
-      [reference]: [
-        temperature
-      ]
+      [reference]: [temperature],
     };
 
     return decodedPayload;
