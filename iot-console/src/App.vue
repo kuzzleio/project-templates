@@ -15,6 +15,8 @@ import {
 import config from './config'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 // TODO - Make host application independent from this stylesheet
 // KIoTP Lib should ship with embedded styles.
 import '@kuzzleio/iot-console/src/assets/style.scss'

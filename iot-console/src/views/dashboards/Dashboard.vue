@@ -5,18 +5,22 @@
       <b-col class="text-left" cols="12" lg="8" md="8">
         <!-- TITLE -->
         <div class="Hero-title text-left">
-          <h3 v-if="!isEditMode" class="font-weight-bold">{{ dashboardLabel }}</h3>
+          <h3 v-if="!isEditMode" class="font-weight-bold">
+            {{ dashboardLabel }}
+          </h3>
           <BFormInput
             v-else
             v-model="dashboardLabel"
             class="LabelInput"
-            :placeholder="$i18n.t('locales.dashboards.dashboard.labelPlaceholder')"
+            :placeholder="
+              $i18n.t('locales.dashboards.dashboard.labelPlaceholder')
+            "
           />
         </div>
 
         <!-- DESCRIPTION -->
         <p class="Hero-description">
-          {{ $i18n.t('locales.dashboards.dashboard.description') }}
+          {{ $i18n.t("locales.dashboards.dashboard.description") }}
         </p>
       </b-col>
 
@@ -28,25 +32,17 @@
         align-self="end"
       >
         <template v-if="isEditMode">
-          <b-button
-            variant="danger"
-            class="mb-4"
-            @click="openNewWidgetModal"
-          >
+          <b-button variant="danger" class="mb-4" @click="openNewWidgetModal">
             <div class="PlusIcon" style="display: inline-block">
               <i class="fa fa-plus" />
             </div>
 
-            {{ $i18n.t('locales.dashboards.dashboard.add-widget') }}
+            {{ $i18n.t("locales.dashboards.dashboard.add-widget") }}
           </b-button>
         </template>
         <template v-else>
-          <b-button
-            variant="danger"
-            class="mb-2"
-            @click="isEditMode = true"
-          >
-            {{ $i18n.t('locales.dashboards.dashboard.edit') }}
+          <b-button variant="danger" class="mb-2" @click="isEditMode = true">
+            {{ $i18n.t("locales.dashboards.dashboard.edit") }}
           </b-button>
         </template>
       </b-col>
@@ -54,7 +50,7 @@
 
     <div class="Container-content">
       <template v-if="isBusy">
-        <b-spinner/>
+        <b-spinner />
       </template>
       <template v-else>
         <DashboardView
@@ -63,7 +59,9 @@
           :dashboardId="id"
           :engineIndex="engineIndex"
           :isEditMode="isEditMode"
-          :new-widget-description="$i18n.t('locales.dashboards.new-widget.description')"
+          :new-widget-description="
+            $i18n.t('locales.dashboards.new-widget.description')
+          "
           :propLayout="layout"
           @change="onLayoutChange"
           @error="handleError"
@@ -83,16 +81,13 @@
           :disabled="!Boolean(dashboardLabel)"
           @click="saveDashboard"
         >
-          {{ $i18n.t('locales.dashboards.dashboard.save') }}
+          {{ $i18n.t("locales.dashboards.dashboard.save") }}
         </b-button>
       </template>
       <template v-else>
-        <b-button
-          variant="outline-danger"
-          @click="promptDeleteDashboard"
-        >
-        <!--  -->
-          {{ $i18n.t('locales.dashboards.dashboard.delete') }}
+        <b-button variant="outline-danger" @click="promptDeleteDashboard">
+          <!--  -->
+          {{ $i18n.t("locales.dashboards.dashboard.delete") }}
         </b-button>
       </template>
     </div>
@@ -101,26 +96,21 @@
 
 <script lang="ts">
 import { Prop, Component, Vue, Mixins } from "vue-property-decorator";
-import {
-  BCol,
-  BFormInput,
-  BButton,
-  BSpinner
-} from 'bootstrap-vue'
+import { BCol, BFormInput, BButton, BSpinner } from "bootstrap-vue";
 import {
   KWidgetSpec,
   fetchDashboardDetails,
   createDashboard,
   updateDashboard,
   EVENT_OPEN_NEW_WIDGET_MODAL,
-  MODULE_NAME as DASHBOARDS
-} from '@kuzzleio/dashboard-builder'
-import EmptyLayout from './EmptyLayout.vue'
+  MODULE_NAME as DASHBOARDS,
+} from "@kuzzleio/dashboard-builder";
+import EmptyLayout from "./EmptyLayout.vue";
 import { mapActions, mapGetters } from "vuex";
 import { KCollectionsNamespace } from "@kuzzleio/kuzzle-application-builder";
-import { kuzzle } from '../../services/kuzzle'
-import { DashboardView } from './factories'
-import { AbstractVueMixin, KTenantGetters } from '@kuzzleio/iot-console'
+import { kuzzle } from "../../services/kuzzle";
+import { DashboardView } from "./factories";
+import { AbstractVueMixin, KTenantGetters } from "@kuzzleio/iot-console";
 
 @Component({
   components: {
@@ -129,33 +119,47 @@ import { AbstractVueMixin, KTenantGetters } from '@kuzzleio/iot-console'
     BCol,
     BFormInput,
     BButton,
-    BSpinner
+    BSpinner,
   },
   computed: {
     ...mapGetters(KCollectionsNamespace.TENANT, {
-      engine: KTenantGetters.SELECTED_TENANT
-    })
+      engine: KTenantGetters.SELECTED_TENANT,
+    }),
   },
   methods: {
-    ...mapActions(DASHBOARDS, ['deleteDashboard'])
-  }
+    ...mapActions(DASHBOARDS, ["deleteDashboard"]),
+  },
 })
 export default class Dashboard extends Mixins(AbstractVueMixin) {
-  @Prop({ required: false }) protected id!: string
+  @Prop({ required: false }) protected id!: string;
 
-  protected engine!: { _id: string }
-  protected isEditMode = !this.id
-  protected dashboardLabel = ''
-  protected layout: KWidgetSpec[] = []
+  protected engine!: { _id: string };
+  protected isBusy = false;
+  protected isEditMode = false;
+  protected dashboardLabel = "";
+  protected layout: KWidgetSpec[] = [];
 
   protected get engineIndex(): string {
-    return this.engine._id
+    return this.engine._id;
   }
 
-  protected deleteDashboard!: (payload: { index: string, id: string }) => Promise<void>;
+  created() {
+    this.isEditMode = !this.id;
+  }
+
+  async mounted(): Promise<void> {
+    if (this.id) {
+      await this.fetchDashboardDetails();
+    }
+  }
+
+  protected deleteDashboard!: (payload: {
+    index: string;
+    id: string;
+  }) => Promise<void>;
 
   protected onLayoutChange(layout: KWidgetSpec[]): void {
-    this.layout = layout
+    this.layout = layout;
   }
 
   async fetchDashboardDetails(): Promise<void> {
@@ -169,7 +173,7 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
       this.dashboardLabel = dashboard._source.label;
       this.layout = dashboard._source.layout || [];
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
     // this.unsetBusy()
   }
@@ -185,7 +189,7 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
         );
         this.isEditMode = false;
         this.$router.push({
-          name: 'dashboard-view',
+          name: "dashboard-view",
           params: {
             engineIndex: this.engineIndex,
             dashboardId: res.result._id,
@@ -209,7 +213,7 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
   async onDashboardIdChanged(dashboardId: string): Promise<void> {
     if (!dashboardId) {
       this.layout = [];
-      this.dashboardLabel = '';
+      this.dashboardLabel = "";
       return;
     }
 
@@ -218,12 +222,12 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
   }
 
   handleError(error: Error): void {
-    console.error(error)
+    console.error(error);
     // this.showError( error.message, this.$i18n.t('locales.dashboards.errors.defaultTitle'))
   }
 
   openNewWidgetModal(): void {
-    this.$root.$emit(EVENT_OPEN_NEW_WIDGET_MODAL)
+    this.$root.$emit(EVENT_OPEN_NEW_WIDGET_MODAL);
   }
 
   async promptDeleteDashboard(): Promise<void> {
@@ -232,19 +236,15 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
     // Typescript will fail compiling saying that $bvModal doesn't exist
     // on type Dashboard (nor Vue, btw). Accessing $bvModal through the
     // prototype works around the type-check.
-    const response = await Vue.prototype.$bvModal.msgBoxConfirm(this.$i18n.t('locales.dashboards.deletePrompt') as string)
+    const response = await Vue.prototype.$bvModal.msgBoxConfirm(
+      this.$i18n.t("locales.dashboards.deletePrompt") as string
+    );
 
     if (response) {
       // this.setBusy()
-      await this.deleteDashboard({ index: this.engineIndex, id: this.id })
+      await this.deleteDashboard({ index: this.engineIndex, id: this.id });
       // this.unsetBusy()
-      this.$router.push({ name: 'dashboards' })
-    }
-  }
-
-  async mounted(): Promise<void> {
-    if (this.id) {
-      await this.fetchDashboardDetails();
+      this.$router.push({ name: "dashboards" });
     }
   }
 }
@@ -262,7 +262,8 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
   border: none;
   background-color: transparent;
   font-size: 1.5rem;
-  font-weight: 700;border-color: transparent;
+  font-weight: 700;
+  border-color: transparent;
   color: #212529;
   padding: 0;
   line-height: 1.2;
@@ -282,7 +283,7 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
   position: sticky;
   bottom: 0;
   padding: 1em;
-  background-color: #FFF;
+  background-color: #fff;
   width: 100%;
   box-shadow: 0px -10px 20px -10px rgb(189, 189, 189);
 }

@@ -3,5 +3,9 @@
     "home": {
       "hello": "Welcome on the Home"
     }
+  },
+  "sidebar": {
+    "dashboards": "Reports",
+    "home": "Home"
   }
 }

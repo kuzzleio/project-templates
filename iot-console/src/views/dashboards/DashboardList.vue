@@ -27,7 +27,6 @@
       <list-action
         :currentFilter="filter"
         :displayActionToggle="false"
-        @toggleListVisibility="toggleListVisibility"
         @searchChange="setFilter"
       >
         <slot name="list-action-inner">
