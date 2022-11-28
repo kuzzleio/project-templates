@@ -95,7 +95,7 @@
 </template>
 
 <script lang="ts">
-import { Prop, Component, Vue, Mixins } from "vue-property-decorator";
+import { Prop, Component, Mixins } from "vue-property-decorator";
 import { BCol, BFormInput, BButton, BSpinner } from "bootstrap-vue";
 import {
   KWidgetSpec,
@@ -231,19 +231,12 @@ export default class Dashboard extends Mixins(AbstractVueMixin) {
   }
 
   async promptDeleteDashboard(): Promise<void> {
-    // NOTE. For some mysterious reason, BootstrapVue type augmentation
-    // (i.e. this.$bvModal and this.$bvToast) doesn't work on this project.
-    // Typescript will fail compiling saying that $bvModal doesn't exist
-    // on type Dashboard (nor Vue, btw). Accessing $bvModal through the
-    // prototype works around the type-check.
-    const response = await Vue.prototype.$bvModal.msgBoxConfirm(
-      this.$i18n.t("locales.dashboards.deletePrompt") as string
-    );
+    const response = await this.$bvModal.msgBoxConfirm(this.$i18n.t('locales.dashboards.deletePrompt') as string)
 
     if (response) {
-      // this.setBusy()
+      this.setBusy()
       await this.deleteDashboard({ index: this.engineIndex, id: this.id });
-      // this.unsetBusy()
+      this.unsetBusy()
       this.$router.push({ name: "dashboards" });
     }
   }
