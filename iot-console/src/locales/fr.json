@@ -3,5 +3,9 @@
     "home": {
       "hello": "Bienvenue à l'accueil"
     }
+  },
+  "sidebar": {
+    "dashboards": "Rapports",
+    "home": "Accueil"
   }
 }

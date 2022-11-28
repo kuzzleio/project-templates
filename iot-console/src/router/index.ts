@@ -23,7 +23,7 @@ export const createRouter = (
   appDefinition: AppChunk[] = []
 ): VueRouter => {
 
-  appDefinition.push(dashboardBuilderChunk);
+  appDefinition.unshift(dashboardBuilderChunk);
 
   const appRoutes = generateRoutes(appDefinition);
   const sidebarItems = generateMenuItems(appDefinition);
@@ -38,12 +38,16 @@ export const createRouter = (
         component: Login,
       },
       {
+        name: "home",
         path: "/",
         beforeEnter: createAuthenticationGuard(store, "login"),
         component: AppLayout,
         props: { navbarItems: [], sidebarItems },
         children: appRoutes,
-        redirect:  '/assets',
+        redirect: '/assets',
+        meta: {
+          breadcrumb: "locales.nav.home",
+        }
       },
       {
         path: "*",

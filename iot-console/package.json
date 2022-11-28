@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "title": "frontend - IoT Console",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,9 +9,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@kuzzleio/dashboard-builder": "^0.5.7",
-    "@kuzzleio/iot-console": "^0.4.1",
-    "@kuzzleio/kuzzle-application-builder": "^0.7.3",
+    "@kuzzleio/dashboard-builder": "^0.5.11",
+    "@kuzzleio/iot-console": "^0.4.10",
+    "@kuzzleio/kuzzle-application-builder": "^0.7.7",
     "@types/lodash": "^4.14.182",
     "core-js": "^3.8.3",
     "lodash": "^4.17.21",

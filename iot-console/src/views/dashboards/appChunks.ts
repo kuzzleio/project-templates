@@ -5,7 +5,8 @@ import { AppChunk } from '@kuzzleio/kuzzle-application-builder'
 
 export const chunk: AppChunk = {
   name: 'dashboards',
-  label: 'Dashboards',
+  label: 'sidebar.dashboards',
+  icon: faChartLine,
   vuejsRoute: {
     path: '/dashboards',
     name: 'dashboards',
