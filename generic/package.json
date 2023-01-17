@@ -4,16 +4,19 @@
   "description": "",
   "author": "",
   "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "clean": "touch app.ts && npm run build | grep TSFILE | cut -d' ' -f 2 | xargs rm",
+    "dev": "NODE_ENV=development npx ergol app.ts -c ergol.config.json",
     "docker": "docker-compose run kuzzle",
     "docker:dev": "docker-compose up",
+    "docker:npm": "docker-compose run kuzzle npm",
+    "docker:npm:install": "npm run docker:npm install",
+    "docker:npm:reinstall": "sudo rm -rf node_modules && npm run docker:npm:install",
     "services": "npx kourou app:start-services",
-    "dev": "NODE_ENV=development npx ergol app.ts -c ergol.config.json",
     "test": "npm run test:lint && npm run test:functional",
     "test:functional": "cucumber-js --exit --fail-fast",
     "test:lint": "eslint ./src --ext .ts --config .eslintrc.json",
-    "test:lint:fix": "eslint ./src --ext .ts --config .eslintrc.json --fix",
-    "build": "tsc --build tsconfig.json",
-    "clean": "touch app.ts && npm run build | grep TSFILE | cut -d' ' -f 2 | xargs rm"
+    "test:lint:fix": "eslint ./src --ext .ts --config .eslintrc.json --fix"
   },
   "main": "app.ts",
   "license": "Apache-2.0",
@@ -22,11 +25,9 @@
   },
   "devDependencies": {
     "@types/node": "^14.14.37",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
     "cucumber": "^6.0.5",
     "ergol": "^1.0.2",
-    "eslint": "^7.24.0",
+    "eslint-plugin-kuzzle": "^0.0.6",
     "should": "13.2.3",
     "ts-node": "^10.8.0",
     "typescript": "^4.7.2"
