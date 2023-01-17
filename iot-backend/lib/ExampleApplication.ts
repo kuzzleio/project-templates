@@ -1,31 +1,36 @@
-import { Backend } from "kuzzle";
 import { registerKIoTP } from "@kuzzleio/iot-backend";
+import { Backend, KuzzleRequest } from 'kuzzle';
 
-import { registerTenantExamplePublicLightning } from "./application-builder/tenant-example-public-lightning";
-import { registerCommons } from "./application-builder/commons";
-
-export type ExampleApplicationConfig = {
-  someValue: string;
-};
+import { registerAssetsModule } from './modules/assets';
+import { registerDevicesModule } from './modules/devices';
+import { registerTenantsModule } from './modules/tenant';
 
 export class ExampleApplication extends Backend {
-  get appConfig() {
-    return this.config.content.application as ExampleApplicationConfig;
-  }
-
   constructor() {
-    super("my-iot-application");
+    super('iot-backend');
 
+    /**
+     * Easier debugging in development
+     */
+    if (process.env.NODE_ENV !== 'production') {
+      this.hook.register('request:onError', async (request: KuzzleRequest) => {
+        this.log.error(request.error);
+      });
+
+      this.config.content.plugins['kuzzle-plugin-logger'].services.stdout.level =
+        'debug';
+    }
+
+    /**
+     * Register KIoTP application
+     */
     registerKIoTP(this);
 
-    // Register ressources defined with ApplicationBuilder
-    registerCommons(this);
-    registerTenantExamplePublicLightning(this);
-  }
-
-  async start() {
-    await super.start();
-
-    this.log.info("Application started");
+    /**
+     * Register custom this modules
+     */
+    registerTenantsModule(this);
+    registerDevicesModule(this);
+    registerAssetsModule(this);
   }
 }
