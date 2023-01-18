@@ -13,7 +13,7 @@ Every scaffold comes with all necessary tools to develop a Kuzzle project:
  - Docker Compose configuration
  - Hot reload with Ergol
  - Linter rules with Eslint
- - Functionnal test framework with Cucumber
+ - Functionnal test framework with Jest
  - CI/CD with Github Actions
 
 ### Available template flavors

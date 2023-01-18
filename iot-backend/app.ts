@@ -1,14 +1,5 @@
-import { ExampleApplication } from './lib/ExampleApplication';
+import { IoTApplication } from "./lib/IoTApplication";
 
-/**
- * Start the application
- */
-const app = new ExampleApplication();
+const app = new IoTApplication();
 
-app
-  .start()
-  .then(async () => {
-    app.log.info('Application started');
-  })
-  .catch(console.error);
-
+app.start();

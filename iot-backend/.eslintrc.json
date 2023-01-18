@@ -1,8 +1,14 @@
 {
-  "plugins": ["kuzzle"],
+  "root": true,
+  "plugins": [
+    "kuzzle"
+  ],
   "extends": [
     "plugin:kuzzle/default",
     "plugin:kuzzle/node",
     "plugin:kuzzle/typescript"
-  ]
+  ],
+  "rules": {
+    "sort-keys": 0
+  }
 }
