@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ES6"],
+    "lib": [
+      "ES6"
+    ],
     "declaration": true,
     "listEmittedFiles": true,
     "module": "commonjs",
@@ -10,12 +12,14 @@
     "baseUrl": ".",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "outDir": "dist/"
   },
   "rootDir": "lib/",
   "include": [
     "app.ts",
-    "lib/**/*.ts"
+    "lib/",
+    "tests/"
   ],
   "exclude": [
     "node_modules"

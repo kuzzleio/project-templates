@@ -58,14 +58,7 @@ kourou security:createUser '{
 }'
 ```
 
-Finally, you need to create the first tenant. If it's not already done, rename accordingly the example tenant group `example_public_lightning` in the `./application-builder/tenant-example-public-lightning` file.
-
-You can now create the first tenant:
-
-```bash
-# replace "example_public_lightning" with the name of your tenant group
-kourou multi-tenancy/tenant:create -a name=kuzzle -a group=example_public_lightning
-```
+You can then load fixtures: `npm run fixtures`
 
 ## Manipulating NPM through Docker
 

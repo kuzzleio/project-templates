@@ -70,8 +70,8 @@ jobs:
       - name: Functional tests
         run: |
           npm i
-          docker-compose -f ./features/docker-compose.yml up -d
-          bash features/wait-kuzzle.sh
+          docker-compose up -d
+          bash tests/wait-kuzzle.sh
           npm run test:functional
         env:
           KUZZLE_VAULT_KEY: ${{ secrets.KUZZLE_VAULT_KEY }}
