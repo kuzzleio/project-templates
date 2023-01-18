@@ -3,30 +3,9 @@
     <b-container>
       <div class="Login-header my-5">
         <svg xmlns="http://www.w3.org/2000/svg" width="276" height="91">
-          <rect
-            fill="#ffffff"
-            fill-opacity="0.0"
-            height="93"
-            width="278"
-            y="-1"
-            x="-1"
-          />
-          <g
-            display="none"
-            overflow="visible"
-            y="0"
-            x="0"
-            height="100"
-            width="100"
-          >
-            <rect
-              fill="url(#gridpattern)"
-              stroke-width="0"
-              y="1"
-              x="1"
-              height="400"
-              width="580"
-            />
+          <rect fill="#ffffff" fill-opacity="0.0" height="93" width="278" y="-1" x="-1" />
+          <g display="none" overflow="visible" y="0" x="0" height="100" width="100">
+            <rect fill="url(#gridpattern)" stroke-width="0" y="1" x="1" height="400" width="580" />
           </g>
           <title>Layer 1</title>
           <g stroke="null">
@@ -83,17 +62,10 @@
 </template>
 
 <script lang="ts">
-import { KLoginForm } from "@kuzzleio/kuzzle-application-builder";
-import { Component } from "vue-property-decorator";
-import {
-  BContainer,
-  BRow,
-  BCol,
-  BCardGroup,
-  BCard,
-  BCardBody,
-} from "bootstrap-vue";
-import Vue from "vue";
+import { Vue, Component } from 'vue-property-decorator';
+import { BContainer, BRow, BCol, BCardGroup, BCard, BCardBody } from 'bootstrap-vue';
+import { KLoginForm } from '@kuzzleio/kuzzle-application-builder';
+
 @Component({
   components: {
     KLoginForm,
@@ -111,7 +83,7 @@ export default class Login extends Vue {
       this.$router.push({ name: this.$route.query.to as string });
       return;
     }
-    this.$router.push({ name: "home" });
+    this.$router.push({ name: 'home' });
   }
 }
 </script>

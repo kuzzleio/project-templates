@@ -2,10 +2,11 @@
   "locales": {
     "home": {
       "hello": "Welcome on the Home"
+    },
+    "labels": {
+      "illuminance": "Illuminance",
+      "lux": "Lux",
+      "parts per million": "Parts per million"
     }
-  },
-  "sidebar": {
-    "dashboards": "Reports",
-    "home": "Home"
   }
 }

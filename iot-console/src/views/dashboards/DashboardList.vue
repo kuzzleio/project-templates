@@ -4,9 +4,9 @@
     <hero
       :title="$i18n.t('locales.dashboards.list.title')"
       :description="i18n.t('locales.dashboards.list.description')"
-      :actionTitle="i18n.t('locales.dashboards.list.create')"
+      :action-title="i18n.t('locales.dashboards.list.create')"
     >
-      <template v-slot:actionPrimary>
+      <template #actionPrimary>
         <b-button
           data-cy="list-actionBtn"
           variant="danger"
@@ -23,22 +23,21 @@
     </hero>
 
     <div class="Container-content">
-       <!-- ACTIONS -->
+      <!-- ACTIONS -->
       <list-action
-        :currentFilter="filter"
-        :displayActionToggle="false"
+        :current-filter="filter"
+        :display-action-toggle="false"
         @searchChange="setFilter"
       >
-        <slot name="list-action-inner">
-        </slot>
+        <slot name="list-action-inner" />
       </list-action>
       <div class="DashboardList text-left">
         <DashbardListItem
           v-for="dashboard in dashboardList"
-          class="mr-4"
-          :key="dashboard._id"
-          :label="dashboard._source.label"
           :id="dashboard._id"
+          :key="dashboard._id"
+          class="mr-4"
+          :label="dashboard._source.label"
         />
       </div>
     </div>
@@ -46,50 +45,45 @@
 </template>
 
 <script lang="ts">
-import debounce from 'lodash/debounce'
-import { MODULE_NAME as DASHBOARDS } from '@kuzzleio/dashboard-builder'
-import { Component, Mixins } from 'vue-property-decorator';
+import { Component, Mixins, Watch } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import { BaseListMixin, KTenantGetters, tenantsStoreNamespace } from '@kuzzleio/iot-console';
-import DashbardListItem from './DashboardListItem.vue'
+import { MODULE_NAME as DASHBOARDS, DashboardsState } from '@kuzzleio/dashboard-builder';
+import debounce from 'lodash/debounce';
+import DashbardListItem from '../../components/dashboards/DashboardListItem.vue';
 
 @Component({
   components: {
-    DashbardListItem
+    DashbardListItem,
   },
   computed: {
     ...mapGetters(DASHBOARDS, ['dashboardList']),
     ...mapGetters(tenantsStoreNamespace, {
-      currentTenant: KTenantGetters.SELECTED_TENANT
-    })
+      currentTenant: KTenantGetters.SELECTED_TENANT,
+    }),
   },
   methods: {
-    ...mapActions(DASHBOARDS, ['fetchDashboardList'])
-  }
+    ...mapActions(DASHBOARDS, ['fetchDashboardList']),
+  },
 })
 export default class DashboardList extends Mixins(BaseListMixin) {
-  protected fetchDashboardList!: (payload: { index: string, filter: string }) => Promise<void>;
-  protected debouncedFetch = debounce((payload) => this.fetchDashboardList(payload), 500)
+  protected fetchDashboardList!: (payload: { index: string; filter: string }) => Promise<void>;
   protected currentTenant!: { _id: string };
-  protected filter = '';
+  public dashboardList!: DashboardsState['dashboardList'];
+  public filter = '';
 
-  async mounted(): Promise<void> {
+  public debouncedSetFilter = debounce(this.setFilter, 600);
+
+  @Watch('filter', { immediate: true })
+  filterUpdated() {
     if (!this.currentTenant) {
-      // TODO show warning
-      return
+      return;
     }
-    this.fetchDashboardList({ index: this.currentTenant._id, filter: this.filter })
+    this.fetchDashboardList({ index: this.currentTenant._id, filter: this.filter });
   }
 
-  setFilter(value: string): void {
-    this.filter = value
-    this.debouncedFetch({
-    index: this.currentTenant._id,
-    filter: this.filter
-  })
+  setFilter(value: string) {
+    this.filter = value;
   }
 }
 </script>
-
-<style lang="scss">
-</style>

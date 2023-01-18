@@ -1,9 +1,17 @@
-import { KuzzleProtocol } from "vue-plugin-kuzzle";
+import { KuzzleProtocol } from 'vue-plugin-kuzzle';
 
 export default {
   backends: {
-    production: {
-      host: "api.iot-console.app.kuzzle.io",
+    main: {
+      host: 'api-main-demoiot.paas.kuzzle.io',
+      protocol: KuzzleProtocol.WEBSOCKET,
+      options: {
+        port: 443,
+        sslConnection: true,
+      },
+    },
+    uat: {
+      host: 'api-uat-demoiot.paas.kuzzle.io',
       protocol: KuzzleProtocol.WEBSOCKET,
       options: {
         port: 443,
@@ -11,7 +19,7 @@ export default {
       },
     },
     local: {
-      host: "localhost",
+      host: 'localhost',
       protocol: KuzzleProtocol.WEBSOCKET,
       options: {
         port: 7512,
@@ -21,12 +29,12 @@ export default {
   },
   i18n: {
     locales: {
-      en: "English",
-      fr: "Français",
+      en: 'English',
+      fr: 'Français',
     },
   },
   customizations: {
-    index: "customizations",
-    collection: "config",
+    index: 'customizations',
+    collection: 'config',
   },
 };

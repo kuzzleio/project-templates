@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "skipLibCheck": true,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -18,9 +19,12 @@
       "webpack-env"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      // Alias peerDependencies to fix resolve
+      "vue": ["node_modules/vue"],
+      "vue-i18n": ["node_modules/vue-i18n"],
+      "vue-router": ["node_modules/vue-router"],
+      "bootstrap-vue": ["node_modules/bootstrap-vue"]
     },
     "lib": [
       "esnext",

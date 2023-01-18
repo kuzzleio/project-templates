@@ -2,10 +2,11 @@
   "locales": {
     "home": {
       "hello": "Bienvenue à l'accueil"
+    },
+    "labels": {
+      "illuminance": "Éclairement lumineux",
+      "lux": "Lux",
+      "parts per million": "Parties par million"
     }
-  },
-  "sidebar": {
-    "dashboards": "Rapports",
-    "home": "Accueil"
   }
 }

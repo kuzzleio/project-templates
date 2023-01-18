@@ -1,19 +1,16 @@
-const { defineConfig } = require("@vue/cli-service");
-const package = require('./package.json');
+const { defineConfig } = require('@vue/cli-service');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TsconfigPaths = new TsconfigPathsPlugin({
+  extensions: ['.ts', '.tsx', '.js', '.vue'],
+});
 
 module.exports = defineConfig({
-  chainWebpack: config => {
-    config
-      .plugin('html')
-      .tap(args => {
-        if (typeof package.title !== 'undefined') {
-          args[0].title = package.title
-        }
-        if (typeof process.env['VUE_APP_TITLE'] !== 'undefined') {
-          args[0].title = process.env['VUE_APP_TITLE'];
-        }
-        return args;
-      });
+  productionSourceMap: process.env.NODE_ENV === 'development',
+  configureWebpack: {
+    devtool: process.env.NODE_ENV === 'development' ? 'eval-source-map' : 'none',
+    resolve: {
+      plugins: [TsconfigPaths],
+    },
   },
   transpileDependencies: true,
 });

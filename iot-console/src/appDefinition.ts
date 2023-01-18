@@ -1,12 +1,32 @@
-import { AppChunk } from '@kuzzleio/kuzzle-application-builder';
-import Dashboard from './views/dashboards/Dashboard.vue';
-import DashboardList from './views/dashboards/DashboardList.vue';
-import DashboardWrapper from './views/dashboards/DashboardsWrapper.vue';
+import { IoTConsoleChunks } from '@kuzzleio/iot-console';
+import { Route } from 'vue-router';
 
-export const chunk: AppChunk[] = [
+// ---- Font Awesome ----
+import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
+import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
+
+// --- Dashboards ---
+import DashboardWrapper from './views/dashboards/DashboardsWrapper.vue';
+import DashboardList from './views/dashboards/DashboardList.vue';
+import Dashboard from './views/dashboards/Dashboard.vue';
+
+export const appDefinition = [
+  {
+    name: 'home',
+    label: 'Home',
+    icon: faHome,
+    vuejsRoute: {
+      path: 'home',
+      name: 'Home',
+      meta: {
+        breadcrumb: 'locales.nav.home',
+      },
+    },
+  },
   {
     name: 'dashboards',
     label: 'Dashboards',
+    icon: faTachometerAlt,
     vuejsRoute: {
       path: '/dashboards',
       name: 'dashboards',
@@ -22,7 +42,7 @@ export const chunk: AppChunk[] = [
           meta: {
             breadcrumb: 'locales.dashboards.nav.view',
           },
-          props: (route) => ({
+          props: (route: Route): { id: string } => ({
             id: route.params.dashboardId,
           }),
         },
@@ -41,11 +61,9 @@ export const chunk: AppChunk[] = [
           meta: {
             breadcrumb: 'locales.dashboards.nav.list',
           },
-          props: {
-            currentIndex: null,
-          },
         },
       ],
     },
   },
+  ...IoTConsoleChunks,
 ];

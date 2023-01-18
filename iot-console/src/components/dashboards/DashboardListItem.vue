@@ -2,10 +2,11 @@
   <router-link :to="{ name: 'dashboard-view', params: { dashboardId: id } }">
     <div class="DashboardListItem">
       <div class="d-flex flex-row align-items-center mt-4 ml-4">
-        <div class="Icon mr-2"> </div>
+        <div class="Icon mr-2"><DashboardIcon /></div>
         <h4 class="Label font-weight-bold flex-grow-1">{{ label }}</h4>
       </div>
-      <div class="SubMenuIcon"></div>
+      <img class="Decoration" src="../../assets/images/DasbhoardListItemDecoration.png" alt="" />
+      <div class="SubMenuIcon" />
     </div>
   </router-link>
 </template>
@@ -13,11 +14,16 @@
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import DashboardIcon from '../icons/DashboardIcon.vue';
 
-@Component({})
+@Component({
+  components: {
+    DashboardIcon,
+  },
+})
 export default class DashboardListItem extends Vue {
-  @Prop({ required: true }) protected label!: string
-  @Prop({ required: true }) protected id!: string
+  @Prop({ required: true }) public label!: string;
+  @Prop({ required: true }) public id!: string;
 }
 </script>
 
@@ -25,8 +31,8 @@ export default class DashboardListItem extends Vue {
 .DashboardListItem {
   display: inline-block;
   position: relative;
-  background-color: #F6F7FB;
-  border: 1px solid #E1E1E1;
+  background-color: #f6f7fb;
+  border: 1px solid #e1e1e1;
   border-radius: 4px;
   min-height: 190px;
   width: 330px;
@@ -43,7 +49,7 @@ export default class DashboardListItem extends Vue {
 }
 
 .Icon {
-  background: #DAEDF6;
+  background: #daedf6;
   border-radius: 12px;
   height: 36px;
   width: 36px;

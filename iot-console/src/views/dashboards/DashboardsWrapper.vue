@@ -1,28 +1,25 @@
 <template>
-  <router-view :engine="currentTenant"></router-view>
+  <router-view :engine="currentTenant" :current-index="currentIndex" />
 </template>
 
 <script lang="ts">
-import { KCollectionsNamespace } from '@kuzzleio/kuzzle-application-builder';
+import { Component, Prop, Provide, Vue } from 'vue-property-decorator';
+import { KCollectionsNamespace, Tenant } from '@kuzzleio/kuzzle-application-builder';
 import { KTenantGetters } from '@kuzzleio/iot-console';
-import Component from "vue-class-component";
-import { Prop, Provide, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
-import { kuzzle } from '../../services/kuzzle'
+import { kuzzle } from '../../services/kuzzle';
 
 @Component({
   computed: {
     ...mapGetters(KCollectionsNamespace.TENANT, {
-      currentTenant: KTenantGetters.SELECTED_TENANT
-    })
-  }
+      currentTenant: KTenantGetters.SELECTED_TENANT,
+    }),
+  },
 })
 export default class DashboardWrapper extends Vue {
-  @Provide('$kuzzle') public kuzzleSdk = kuzzle
-  @Prop({ required: false }) public currentIndex!: string
+  @Provide('$kuzzle') public kuzzleSdk = kuzzle;
+  @Prop({ required: false }) public currentIndex!: string;
+
+  public currentTenant!: Tenant | undefined;
 }
 </script>
-
-<style>
-
-</style>
