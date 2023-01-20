@@ -21,7 +21,8 @@
   "main": "app.ts",
   "license": "Apache-2.0",
   "dependencies": {
-    "kuzzle": "^2"
+    "kuzzle": "^2",
+    "kuzzle-plugin-prometheus": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.37",
