@@ -1,19 +1,22 @@
-# Builder stage
 FROM kuzzleio/kuzzle-runner:16 as builder
-
-ARG KUZZLE_VAULT_KEY
-ENV KUZZLE_VAULT_KEY=$KUZZLE_VAULT_KEY
 
 ADD . /var/app
 
 WORKDIR /var/app
 
-RUN npm install
+RUN npm ci
 RUN npm run build
-RUN npm prune --production
+
+FROM kuzzleio/kuzzle-runner:16 as prepare
+
+WORKDIR /var/app
+ENV NODE_ENV=production
+
+COPY --from=builder /var/app/package*.json /var/app/.npmrc* /var/app/dist ./
+RUN npm install --production
 
 # Final image
-FROM node:16-stretch-slim
+FROM node:16-stretch-slim as production
 
 ARG KUZZLE_VAULT_KEY
 ENV KUZZLE_VAULT_KEY=$KUZZLE_VAULT_KEY
@@ -22,6 +25,6 @@ ENV NODE_ENV=production
 
 WORKDIR /var/app
 
-COPY --from=builder /var/app/dist .
+COPY --from=prepare /var/app/ ./
 
 CMD [ "node", "app.js" ]
