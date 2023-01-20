@@ -1,4 +1,5 @@
 import { Backend } from "kuzzle";
+import { PrometheusPlugin } from "kuzzle-plugin-prometheus";
 
 export type MyApplicationConfig = {
   someValue: string;
@@ -9,12 +10,16 @@ export type MyApplicationConfig = {
 };
 
 export class MyApplication extends Backend {
+  private prometheusPlugin = new PrometheusPlugin();
+
   get appConfig() {
     return this.config.content.application as MyApplicationConfig;
   }
 
   constructor() {
     super("my-application");
+
+    this.plugin.use(this.prometheusPlugin);
   }
 
   async start() {
