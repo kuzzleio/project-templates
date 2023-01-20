@@ -1,4 +1,5 @@
 import { registerKIoTP } from "@kuzzleio/iot-backend";
+import { PrometheusPlugin } from "kuzzle-plugin-prometheus";
 import { Backend } from "kuzzle";
 
 import { AssetsModule } from "./modules/assets";
@@ -12,6 +13,8 @@ export type IoTApplicationConfig = {
 
 export class IoTApplication extends Backend {
   private modules: Module[] = [];
+
+  private prometheusPlugin = new PrometheusPlugin();
 
   get appConfig() {
     return this.config.content.application as IoTApplicationConfig;
@@ -29,6 +32,8 @@ export class IoTApplication extends Backend {
     for (const module of this.modules) {
       module.register();
     }
+
+    this.plugin.use(this.prometheusPlugin);
   }
 
   async start() {

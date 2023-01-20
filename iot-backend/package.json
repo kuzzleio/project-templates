@@ -30,7 +30,8 @@
     "kuzzle": "^2",
     "kuzzle-device-manager": ">=2.0.1",
     "kuzzle-plugin-hermes-messenger": ">=0.3.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "kuzzle-plugin-prometheus": "^4.1.0"
   },
   "devDependencies": {
     "@types/jest": "^29.2.5",
